@@ -1,9 +1,6 @@
 # Dependencies
 node_modules/
 
-# Output files
-projects.json
-
 # Logs
 *.log
 npm-debug.log*
