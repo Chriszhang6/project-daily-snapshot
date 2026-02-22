@@ -1,0 +1,33 @@
+{
+  "name": "project-daily-snapshot",
+  "version": "1.0.0",
+  "description": "A reusable GitHub Action that generates a projects.json file from your GitHub repositories with Pages enabled",
+  "main": "scripts/update-projects.js",
+  "bin": {
+    "project-snapshot": "scripts/update-projects.js"
+  },
+  "scripts": {
+    "start": "node scripts/update-projects.js",
+    "test": "node scripts/update-projects.js"
+  },
+  "keywords": [
+    "github-action",
+    "github-pages",
+    "projects",
+    "snapshot",
+    "automation"
+  ],
+  "author": "Chris Zhang <Chriszhang6>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Chriszhang6/project-daily-snapshot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Chriszhang6/project-daily-snapshot/issues"
+  },
+  "homepage": "https://github.com/Chriszhang6/project-daily-snapshot#readme",
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

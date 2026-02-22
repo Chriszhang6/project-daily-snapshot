@@ -1,0 +1,60 @@
+name: 'Daily Project Snapshot'
+description: 'Automatically generates a projects.json file from your GitHub repositories with Pages enabled'
+
+inputs:
+  github_username:
+    description: 'Your GitHub username'
+    required: false
+    default: 'Chriszhang6'
+  output_path:
+    description: 'Path where projects.json will be saved (relative to repo root)'
+    required: false
+    default: 'projects.json'
+  filter_forks:
+    description: 'Exclude forked repositories'
+    required: false
+    default: 'true'
+  filter_archived:
+    description: 'Exclude archived repositories'
+    required: false
+    default: 'true'
+  min_stars:
+    description: 'Minimum star count for repositories'
+    required: false
+    default: '0'
+  pat_token:
+    description: 'GitHub Personal Access Token (use secrets.PAT_TOKEN)'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    - name: Fetch GitHub Repos and Update projects.json
+      shell: bash
+      env:
+        GITHUB_TOKEN: ${{ inputs.pat_token }}
+        GITHUB_USERNAME: ${{ inputs.github_username }}
+        OUTPUT_FILE: ${{ inputs.output_path }}
+        FILTER_FORKS: ${{ inputs.filter_forks }}
+        FILTER_ARCHIVED: ${{ inputs.filter_archived }}
+        MIN_STARS: ${{ inputs.min_stars }}
+      run: |
+        curl -fsSL https://raw.githubusercontent.com/Chriszhang6/project-daily-snapshot/main/scripts/update-projects.js -o /tmp/update-projects.js
+        node /tmp/update-projects.js
+
+    - name: Commit and push changes
+      shell: bash
+      env:
+        GITHUB_TOKEN: ${{ inputs.pat_token }}
+      run: |
+        git config user.name 'github-actions[bot]'
+        git config user.email 'github-actions[bot]@users.noreply.github.com'
+        OUTPUT_PATH="${{ inputs.output_path }}"
+        git add "$OUTPUT_PATH"
+        git diff --staged --quiet || git commit -m "Update GitHub projects list [skip ci]"
+        git push
