@@ -1,80 +1,47 @@
 # Project Daily Snapshot
 
-A reusable GitHub Action that automatically scans your GitHub repositories and generates a `projects.json` file containing projects with GitHub Pages enabled.
+A centralized GitHub project data source that automatically scans a GitHub account and publishes a `projects.json` file for public consumption.
 
-## Features
+## How It Works
 
-- **Daily Automatic Updates**: Runs every day at UTC 00:00 via GitHub Actions cron
-- **Smart Pages Detection**: Uses multiple methods to detect GitHub Pages:
-  - GitHub Pages API (when authenticated)
-  - Direct URL testing
-  - Naming pattern matching (fallback)
-- **Configurable**: Works with any GitHub username
-- **Filtering**: Automatically excludes forks and archived repositories
-- **Rich Metadata**: Includes description, language, stars, forks, topics, and timestamps
+This repository runs a GitHub Action daily that:
+1. Scans all repositories for a given GitHub user
+2. Detects which repositories have GitHub Pages enabled
+3. Generates a `projects.json` file with project metadata
+4. Commits the JSON file to this repository
 
-## Usage
+Since this repository is **public**, any other project can fetch and use the `projects.json` data.
 
-### Option 1: As a Standalone Repository
+## Fetch the Data
 
-1. Fork or copy this repository
-2. Configure your GitHub username (see Configuration below)
-3. Add a GitHub Personal Access Token (PAT) as `PAT_TOKEN` secret
-4. Enable GitHub Actions in your repository settings
+Other projects can consume the projects data in several ways:
 
-### Option 2: As a Composite Action (Reusable Workflow)
+### Option 1: Direct Raw URL (Recommended)
 
-Add this to your repository's workflow:
-
-```yaml
-name: Update Projects
-
-on:
-  schedule:
-    - cron: '0 0 * * *'  # Run daily at UTC 00:00
-  workflow_dispatch:
-
-permissions:
-  contents: write
-
-jobs:
-  update-projects:
-    uses: Chriszhang6/project-daily-snapshot/.github/workflows/daily-snapshot.yml@main
-    secrets:
-      pat_token: ${{ secrets.PAT_TOKEN }}
-    with:
-      github_username: 'your-username'
-      output_path: 'projects.json'
+```javascript
+fetch('https://raw.githubusercontent.com/Chriszhang6/project-daily-snapshot/main/projects.json')
+  .then(r => r.json())
+  .then(projects => console.log(projects));
 ```
 
-## Configuration
+### Option 2: jsDelivr CDN (Faster, with CDN caching)
 
-### Required Secrets
+```javascript
+fetch('https://cdn.jsdelivr.net/gh/Chriszhang6/project-daily-snapshot@main/projects.json')
+  .then(r => r.json())
+  .then(projects => console.log(projects));
+```
 
-Add the following secret to your repository (Settings → Secrets and variables → Actions):
+### Option 3: Import as ES Module
 
-- **`PAT_TOKEN`**: A GitHub Personal Access Token with `repo` and `public_repo` scopes
+```javascript
+// Using dynamic import
+const { default: projects } = await import(
+  'https://cdn.jsdelivr.net/gh/Chriszhang6/project-daily-snapshot@main/projects.json'
+);
+```
 
-### Workflow Inputs
-
-| Input | Description | Default |
-|-------|-------------|---------|
-| `github_username` | Your GitHub username | `Chriszhang6` |
-| `output_path` | Where to save projects.json | `projects.json` |
-| `filter_forks` | Exclude forked repositories | `true` |
-| `filter_archived` | Exclude archived repositories | `true` |
-| `min_stars` | Minimum star count (optional) | `0` |
-
-### Environment Variables
-
-You can also configure via environment variables in the script:
-
-- `GITHUB_USERNAME`: Override the default username
-- `OUTPUT_FILE`: Custom output path
-
-## Output Format
-
-The generated `projects.json` file contains an array of project objects:
+## Data Format
 
 ```json
 [
@@ -88,90 +55,137 @@ The generated `projects.json` file contains an array of project objects:
     "forks": 5,
     "updatedAt": "2024-01-15T10:30:00Z",
     "createdAt": "2023-06-01T08:00:00Z",
-    "topics": ["web", "frontend"]
+    "topics": ["web", "frontend"],
+    "homepage": "https://example.com"
   }
 ]
 ```
 
-## Consuming projects.json in Your Project
+## Usage Examples
 
-Once the action generates `projects.json`, you can use it in your application:
+### HTML/JavaScript
 
-```javascript
-// Load projects data
-async function loadProjects() {
-  const response = await fetch('/projects.json');
-  const projects = await response.json();
-  return projects;
+```html
+<!DOCTYPE html>
+<html>
+<body>
+  <h1>My Projects</h1>
+  <div id="projects"></div>
+
+  <script>
+    fetch('https://cdn.jsdelivr.net/gh/Chriszhang6/project-daily-snapshot@main/projects.json')
+      .then(r => r.json())
+      .then(projects => {
+        document.getElementById('projects').innerHTML = projects.map(p => `
+          <div class="project">
+            <h3><a href="${p.url}">${p.name}</a></h3>
+            <p>${p.description}</p>
+            <small>${p.language} | ⭐ ${p.stars}</small>
+          </div>
+        `).join('');
+      });
+  </script>
+</body>
+</html>
+```
+
+### React
+
+```jsx
+import { useState, useEffect } from 'react';
+
+function Projects() {
+  const [projects, setProjects] = useState([]);
+
+  useEffect(() => {
+    fetch('https://cdn.jsdelivr.net/gh/Chriszhang6/project-daily-snapshot@main/projects.json')
+      .then(r => r.json())
+      .then(setProjects);
+  }, []);
+
+  return (
+    <div>
+      {projects.map(p => (
+        <div key={p.name}>
+          <h3><a href={p.url}>{p.name}</a></h3>
+          <p>{p.description}</p>
+        </div>
+      ))}
+    </div>
+  );
 }
-
-// Display projects
-function renderProjects(projects) {
-  const container = document.getElementById('projects-list');
-  projects.forEach(project => {
-    const card = document.createElement('div');
-    card.innerHTML = `
-      <h3><a href="${project.url}">${project.name}</a></h3>
-      <p>${project.description}</p>
-      <small>${project.language} | ⭐ ${project.stars}</small>
-    `;
-    container.appendChild(card);
-  });
-}
 ```
 
-## Pages Detection Methods
+### Vue.js
 
-The action uses a three-tier approach to detect GitHub Pages:
+```vue
+<template>
+  <div>
+    <div v-for="project in projects" :key="project.name" class="project">
+      <h3><a :href="project.url">{{ project.name }}</a></h3>
+      <p>{{ project.description }}</p>
+    </div>
+  </div>
+</template>
 
-1. **GitHub Pages API** (most accurate) - Requires authentication via PAT_TOKEN
-2. **Direct URL Testing** - Makes HEAD request to the potential Pages URL
-3. **Pattern Matching** (fallback) - Matches common naming patterns like:
-   - `*.github.io`
-   - `-homepage`, `-portfolio`, `-website`, `-site`
+<script setup>
+import { ref, onMounted } from 'vue';
 
-## Development
+const projects = ref([]);
 
-### Local Testing
-
-You can test the script locally:
-
-```bash
-# Install dependencies (none required - uses Node.js built-ins)
-node scripts/update-projects.js
+onMounted(async () => {
+  const response = await fetch(
+    'https://cdn.jsdelivr.net/gh/Chriszhang6/project-daily-snapshot@main/projects.json'
+  );
+  projects.value = await response.json();
+});
+</script>
 ```
 
-Set environment variables if needed:
+### Python (FastAPI/Flask)
 
-```bash
-export GITHUB_USERNAME="your-username"
-export GITHUB_TOKEN="your-token"  # Optional but recommended
-export OUTPUT_FILE="./projects.json"
-node scripts/update-projects.js
+```python
+import httpx
+from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/projects")
+async def get_projects():
+    async with httpx.AsyncClient() as client:
+        response = await client.get(
+            'https://cdn.jsdelivr.net/gh/Chriszhang6/project-daily-snapshot@main/projects.json'
+        )
+        return response.json()
 ```
 
-## Troubleshooting
+## Setting Up Your Own
 
-### No projects found
+To create your own centralized project snapshot:
 
-- Ensure your repositories have GitHub Pages enabled
-- Check that `PAT_TOKEN` has the correct permissions
-- Verify the GitHub username is correct
+1. **Fork this repository**
 
-### Rate limiting
+2. **Configure your GitHub username**:
+   - Edit `.github/workflows/daily-snapshot.yml`
+   - Change `GITHUB_USERNAME: 'Chriszhang6'` to your username
 
-- Using a PAT_TOKEN increases rate limits
-- The action caches results to minimize API calls
+3. **Add PAT_TOKEN secret**:
+   - Go to Settings → Secrets and variables → Actions
+   - Add `PAT_TOKEN` with `repo` and `public_repo` scopes
 
-### Pages not detected
+4. **Enable GitHub Actions**:
+   - Go to Actions → Settings
+   - Enable "Allow all actions and reusable workflows"
 
-- Some repos may not be detected via API or URL test
-- Add custom patterns to `likelyHasPages()` in `scripts/update-projects.js`
+5. **Test the workflow**:
+   - Go to Actions → "Daily Project Snapshot"
+   - Click "Run workflow" to test manually
+
+Then other projects can fetch from your repo:
+```
+https://raw.githubusercontent.com/YOUR_USERNAME/project-daily-snapshot/main/projects.json
+```
 
 ## License
 
 MIT
-
-## Contributing
-
-Contributions welcome! Feel free to open issues or pull requests.
