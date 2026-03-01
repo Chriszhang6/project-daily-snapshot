@@ -1,13 +1,13 @@
 [
   {
     "name": "AI_DAILY",
-    "description": "A GitHub project",
+    "description": "AI DAILY is an automated news aggregation system that delivers a daily digest of AI-related news directly to your inbox.",
     "url": "https://Chriszhang6.github.io/AI_DAILY/",
     "github": "https://github.com/Chriszhang6/AI_DAILY",
     "language": "Python",
     "stars": 1,
     "forks": 0,
-    "updatedAt": "2026-02-27T22:09:13Z",
+    "updatedAt": "2026-02-28T22:08:40Z",
     "createdAt": "2026-02-14T06:12:11Z",
     "topics": [],
     "homepage": null
@@ -20,8 +20,34 @@
     "language": "Python",
     "stars": 0,
     "forks": 0,
-    "updatedAt": "2026-02-27T22:08:48Z",
+    "updatedAt": "2026-02-28T22:07:27Z",
     "createdAt": "2026-02-21T06:22:25Z",
+    "topics": [],
+    "homepage": null
+  },
+  {
+    "name": "ori-vs-rat-game",
+    "description": "Rat Jump - Doodle Jump Style Game",
+    "url": "https://Chriszhang6.github.io/ori-vs-rat-game/",
+    "github": "https://github.com/Chriszhang6/ori-vs-rat-game",
+    "language": "JavaScript",
+    "stars": 0,
+    "forks": 0,
+    "updatedAt": "2026-02-28T20:55:11Z",
+    "createdAt": "2025-01-27T10:25:12Z",
+    "topics": [],
+    "homepage": null
+  },
+  {
+    "name": "windows98-homepage",
+    "description": "Windows 98 Personal Homepage",
+    "url": "https://Chriszhang6.github.io/windows98-homepage/",
+    "github": "https://github.com/Chriszhang6/windows98-homepage",
+    "language": "HTML",
+    "stars": 0,
+    "forks": 0,
+    "updatedAt": "2026-02-28T20:50:27Z",
+    "createdAt": "2025-10-21T21:23:35Z",
     "topics": [],
     "homepage": null
   },
@@ -35,19 +61,6 @@
     "forks": 0,
     "updatedAt": "2026-02-26T09:56:55Z",
     "createdAt": "2026-02-20T07:02:42Z",
-    "topics": [],
-    "homepage": null
-  },
-  {
-    "name": "windows98-homepage",
-    "description": "Windows 98 Personal Homepage",
-    "url": "https://Chriszhang6.github.io/windows98-homepage/",
-    "github": "https://github.com/Chriszhang6/windows98-homepage",
-    "language": "HTML",
-    "stars": 0,
-    "forks": 0,
-    "updatedAt": "2026-02-26T09:38:33Z",
-    "createdAt": "2025-10-21T21:23:35Z",
     "topics": [],
     "homepage": null
   },
@@ -87,19 +100,6 @@
     "forks": 0,
     "updatedAt": "2026-02-16T06:35:02Z",
     "createdAt": "2025-12-26T06:52:37Z",
-    "topics": [],
-    "homepage": null
-  },
-  {
-    "name": "ori-vs-rat-game",
-    "description": "A GitHub project",
-    "url": "https://Chriszhang6.github.io/ori-vs-rat-game/",
-    "github": "https://github.com/Chriszhang6/ori-vs-rat-game",
-    "language": "JavaScript",
-    "stars": 0,
-    "forks": 0,
-    "updatedAt": "2026-02-13T23:41:10Z",
-    "createdAt": "2025-01-27T10:25:12Z",
     "topics": [],
     "homepage": null
   },
