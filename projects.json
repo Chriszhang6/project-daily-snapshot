@@ -7,7 +7,7 @@
     "language": "Python",
     "stars": 2,
     "forks": 0,
-    "updatedAt": "2026-05-15T22:26:43Z",
+    "updatedAt": "2026-05-16T22:22:13Z",
     "createdAt": "2026-02-14T06:12:11Z",
     "topics": [],
     "homepage": "https://chriszhang6.github.io/AI_DAILY/"
@@ -20,10 +20,23 @@
     "language": "Python",
     "stars": 0,
     "forks": 0,
-    "updatedAt": "2026-05-15T22:24:39Z",
+    "updatedAt": "2026-05-16T22:20:03Z",
     "createdAt": "2026-02-21T06:22:25Z",
     "topics": [],
     "homepage": null
+  },
+  {
+    "name": "mario",
+    "description": "A simplified Super Mario Bros game built with HTML5 Canvas and JavaScript.",
+    "url": "https://Chriszhang6.github.io/mario/",
+    "github": "https://github.com/Chriszhang6/mario",
+    "language": "JavaScript",
+    "stars": 0,
+    "forks": 0,
+    "updatedAt": "2026-05-16T06:39:08Z",
+    "createdAt": "2026-02-20T07:02:42Z",
+    "topics": [],
+    "homepage": "https://chriszhang6.github.io/mario/"
   },
   {
     "name": "windows98-homepage",
@@ -63,19 +76,6 @@
     "createdAt": "2026-02-19T08:44:07Z",
     "topics": [],
     "homepage": null
-  },
-  {
-    "name": "mario",
-    "description": "A simplified Super Mario Bros game built with HTML5 Canvas and JavaScript.",
-    "url": "https://Chriszhang6.github.io/mario/",
-    "github": "https://github.com/Chriszhang6/mario",
-    "language": "JavaScript",
-    "stars": 0,
-    "forks": 0,
-    "updatedAt": "2026-03-05T09:17:19Z",
-    "createdAt": "2026-02-20T07:02:42Z",
-    "topics": [],
-    "homepage": "https://chriszhang6.github.io/mario/"
   },
   {
     "name": "ori-vs-rat-game",
