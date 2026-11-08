@@ -13,6 +13,19 @@
     "homepage": "https://chriszhang6.github.io/AI_DAILY/"
   },
   {
+    "name": "windows98-homepage",
+    "description": "Windows 98 Personal Homepage",
+    "url": "https://Chriszhang6.github.io/windows98-homepage/",
+    "github": "https://github.com/Chriszhang6/windows98-homepage",
+    "language": "HTML",
+    "stars": 0,
+    "forks": 0,
+    "updatedAt": "2026-11-07T23:03:46Z",
+    "createdAt": "2025-10-21T21:23:35Z",
+    "topics": [],
+    "homepage": null
+  },
+  {
     "name": "asx_weekly_report",
     "description": "A GitHub project",
     "url": "https://Chriszhang6.github.io/asx_weekly_report/",
@@ -50,19 +63,6 @@
     "createdAt": "2026-02-20T07:02:42Z",
     "topics": [],
     "homepage": "https://chriszhang6.github.io/mario/"
-  },
-  {
-    "name": "windows98-homepage",
-    "description": "Windows 98 Personal Homepage",
-    "url": "https://Chriszhang6.github.io/windows98-homepage/",
-    "github": "https://github.com/Chriszhang6/windows98-homepage",
-    "language": "HTML",
-    "stars": 0,
-    "forks": 0,
-    "updatedAt": "2026-05-10T02:57:49Z",
-    "createdAt": "2025-10-21T21:23:35Z",
-    "topics": [],
-    "homepage": null
   },
   {
     "name": "bookshelf",
